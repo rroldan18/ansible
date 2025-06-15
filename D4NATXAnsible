@@ -1,0 +1,244 @@
+DAY 4
+
+Open VMware
+Open D3Pentest
+custom VMnet 1
+
+cmd
+ip addr
+get ip and open on secure crt
+ssh and ipadd of D3Pentest
+
+https://github.com/rroldan18/RivanSecPlus701 - fork
+
+Day1-kali explore.md -pen
+sudo /opt/lampp/lampp start  
+
+nmap -v 192.168.101.129
+
+nmap -v -ama.edu.ph  ->[your school]
+
+22 -> mahirap i hack
+
+
+cmd
+
+sudo /opt/lampp/lampp start 
+http://192.168.101.129/mutillidae/src/index.php launch on website
+
+click User Info (SQL)
+
+login using credentials
+' OR '1'='1
+' OR '1'='1
+get user admin 
+
+open kali paste
+sudo su
+sqlmap --url="https://127.0.0.1/mutillidae/src/index.php?page=user-info.php&username=admin&password=adminpass&user-info-php-submit-button=View+Account+Details" -D mutillidae --tables
+
+line 141 -day 3
+sqlmap --url="https://127.0.0.1/mutillidae/src/index.php?page=user-info.php&username=admin&password=adminpass&user-info-php-submit-button=View+Account+Details" -D mutillidae -T credit_cards --dump
+
+
+
+
+ Configuration Security Threat Defense zones
+
+day4
+line 52 to 72
+paste on vpnph vmware
+line 76 to 89 - block
+line 91 to 94 - allow
+line 123 to 132 - block
+
+Allow command
+Int Gi 1
+ no ip access-group ISKULBUKOL in
+end
+
+
+
+-------------
+hackable
+nmap -sP ipaddress
+nmap -v
+
+-------
+ansible
+
+Task 1:
+basic firewall
+Blue Team -configure firewall
+line 308
+
+ GOLDEN  FIREWALL FORMULA:  paloalto,fortinet,cisco,checkpoint.
+   protocol         hacker    victim       port
+
+
+"siem tool"    -> splunk
+service timestamps log datetime
+service timestamps debug datetime
+logging 10.m.1.10
+logging trap 5
+
+create firewall
+line 283 to 293 -> paste
+line 315 to 329 -> remove log paste
+go to notepad ++
+paste in secureCRT VPN- S2SPH
+
+
+ping -> nmap -Pn -v www.web310.com
+show host
+
+
+remove the firewall
+  Remote the FWP1
+   Int Gi 3
+  no ip access-group FWP1 in
+
+Task 2:
+Your job as FW admin in pogo with 100k sweldo:
+Allow only dns,hhtps of www.web310.com
+and allow only ssh of www.web310.com
+
+
+Task 3:
+Your job as FW admin in pogo with 100k sweldo:
+Allow only Management 22,23,80 of www.web310.com
+and allow only ssh of www.web310.com
+
+Config t
+NO IP access-list Extended FWP3
+IP access-list Extended FWP3
+ Permit tcp Any host www.web310.com eq 22 
+ Permit tcp Any host www.web310.com eq 23
+ Permit tcp Any host www.web310.com eq 80
+ Permit tcp Any host www.web311.com eq 53
+ Permit icmp Any host www.web311.com
+
+ Int Gi 3
+  ip access-group FWP3 in
+  end
+
+
+
+Task 4:
+Your job as FW admin in pogo with 100k sweldo:
+Allow only Management ping,http,https,dns,ssh of www.web310.com
+and allow only ping,telnet,https of www.web311.com
+"POGOPOLICY4"
+
+
+Config t
+NO IP access-list Extended POGOPOLICY4
+IP access-list Extended POGOPOLICY4
+ Permit icmp Any host www.web310.com
+ Permit tcp Any host www.web310.com eq 80
+ Permit tcp Any host www.web310.com eq 443
+ Permit tcp Any host www.web310.com eq 53
+ Permit tcp Any host www.web310.com eq 1194
+ Permit icmp Any host www.web311.com
+ Permit tcp Any host www.web311.com eq 1433
+ Permit tcp Any host www.web311.com eq 443
+
+ Int Gi 3
+  ip access-group POGOPOLICY4 in
+  end
+
+remove firewall
+ Int Gi 3
+  no ip access-group POGOPOLICY4 in
+  end
+
+----------------------------------
+FORT forwarding
+NAT
+8080 -> PAT
+
+Linux based - smart building
+TASK8: CONFIGURING CISCO NETWORK SERVICES: -line 478
+line 482 to 484
+go to Cisco crt paste
+Cisco crt
+sh clock
+
+nmap -sU 216.239.35.8 -> on cmd
+
+line 495
+
+
+line 534
+
+clear ip NAT TRANSLATION *
+do sh run | inc nat
+
+
+line 562 to 575
+sh ip nat translations
+
+BLD1 - 103.21 80 8.151 8080
+BLD1 - 103.21 443 8.151 8443
+BLD2 - 103.22 80 8.152 8080
+BLD2 - 103.22 443 8.152 8443
+BLD3 - 103.23 443 8.153 8443
+
+config t
+no access-list 8
+access-list 8 permit any
+Int Gi 3
+ ip nat Inside
+Int gi 1
+ip nat Outside
+IP Nat inside source static tcp 192.168.103.21 80 208.8.8.151 8080
+IP Nat inside source static tcp 192.168.103.21 443 208.8.8.151 8443
+IP Nat inside source static tcp 192.168.103.22 80 208.8.8.152 8080
+IP Nat inside source static tcp 192.168.103.22 443 208.8.8.152 8443
+IP Nat inside source static tcp 192.168.103.23 443 208.8.8.153 8443
+IP nat inside source list 8 int gi 1 Overload
+end
+show ip nat translation
+
+verify
+go to website
+208.8.8.151:8443
+208.8.8.152:8443
+208.8.8.153:8443
+go to cmd
+nmap -v 208.8.8.151
+
+Go to host
+edit
+208.8.8.151 www.bldg1.com
+208.8.8.152 www.bldg2.com
+208.8.8.153 www.bldg3.com
+
+--------------------------------------------------------
+
+Ansible
+
+NetOps
+
+SSH Prereq
+1. Non-default hostname
+2. Domain Name
+3. Account
+4. Crypto Keys
+5. Allow SSH
+
+
+
+Inside Ansible /OPS
+ip -4 addr
+get ip add 208.8.8.163
+open in Secure CRT
+
+
+----------------------------
+Exam notes
+Ansible Programming language: Python
+Playbook extension: yml
+
+
+
